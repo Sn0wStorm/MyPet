@@ -34,7 +34,7 @@
 
         <minecraft.version>1.7.9</minecraft.version>
         <bukkit.version>R0.1-SNAPSHOT</bukkit.version>
-        <bukkit.packet>v1_7_R3</bukkit.packet>
+        <bukkit.packet>v1_7_R2</bukkit.packet>
 
         <citizensapi.version>2.0.9-SNAPSHOT</citizensapi.version>
         <mcmmo.version>1.4.07</mcmmo.version>
