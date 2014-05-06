@@ -24,13 +24,8 @@ import de.Keyle.MyPet.entity.EntitySize;
 import de.Keyle.MyPet.entity.types.EntityMyPet;
 import de.Keyle.MyPet.entity.types.MyPet;
 import de.Keyle.MyPet.util.logger.DebugLogger;
-<<<<<<< HEAD
-import net.minecraft.server.v1_7_R2.Entity;
-import net.minecraft.server.v1_7_R2.World;
-=======
-import net.minecraft.server.v1_7_R3.*;
-import org.bukkit.craftbukkit.v1_7_R3.inventory.CraftItemStack;
->>>>>>> ac3757e... irongolems can hold flowers
+import net.minecraft.server.v1_7_R2.*;
+import org.bukkit.craftbukkit.v1_7_R2.inventory.CraftItemStack;
 
 @EntitySize(width = 1.4F, height = 2.9F)
 public class EntityMyIronGolem extends EntityMyPet {

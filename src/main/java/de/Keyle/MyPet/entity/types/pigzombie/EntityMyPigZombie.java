@@ -27,13 +27,9 @@ import de.Keyle.MyPet.entity.types.EntityMyPet;
 import de.Keyle.MyPet.entity.types.MyPet;
 import de.Keyle.MyPet.entity.types.MyPet.PetState;
 import de.Keyle.MyPet.util.BukkitUtil;
-<<<<<<< HEAD
-import net.minecraft.server.v1_7_R2.*;
-=======
 import de.Keyle.MyPet.util.MyPetVersion;
 import de.Keyle.MyPet.util.Util;
-import net.minecraft.server.v1_7_R3.*;
->>>>>>> 5b3e2f8... fix equipment of pets not showing all the time
+import net.minecraft.server.v1_7_R2.*;
 import org.bukkit.Bukkit;
 
 @EntitySize(width = 0.6F, height = 1.9F)

@@ -32,7 +32,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <minecraft.version>1.7.9</minecraft.version>
+        <minecraft.version>1.7.5</minecraft.version>
         <bukkit.version>R0.1-SNAPSHOT</bukkit.version>
         <bukkit.packet>v1_7_R2</bukkit.packet>
 
@@ -56,7 +56,7 @@
         <griefprevention.version>7.8</griefprevention.version>
         <pvpmanager.version>1.7.4</pvpmanager.version>
         <heroes.version>1.5.5.1</heroes.version>
-        <spigot.version>1.7.9-R0.1-SNAPSHOT</spigot.version>
+        <spigot.version>1.7.5-R0.1-SNAPSHOT</spigot.version>
         <!-- http://spoutcraft.org/resources/heroes.2/updates -->
 
         <metrics.version>R7</metrics.version>
