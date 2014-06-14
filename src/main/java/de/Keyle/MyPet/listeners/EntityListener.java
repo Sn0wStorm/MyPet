@@ -404,7 +404,7 @@ public class EntityListener implements Listener {
                         if (leashTarget instanceof Ageable) {
                             extendedInfo.getCompoundData().put("Baby", new TagByte(!((Ageable) leashTarget).isAdult()));
                         }
-                        if (leashTarget instanceof Zombie || leashTarget instanceof PigZombie || leashTarget instanceof Skeleton) {
+                        if (leashTarget.getWorld().getGameRuleValue("doMobLoot").equalsIgnoreCase("true") && Configuration.RETAIN_EQUIPMENT_ON_TAME && (leashTarget instanceof Zombie || leashTarget instanceof PigZombie || leashTarget instanceof Skeleton)) {
                             Random random = ((CraftLivingEntity) leashTarget).getHandle().aH();
                             List<TagCompound> equipmentList = new ArrayList<TagCompound>();
                             if (random.nextFloat() <= leashTarget.getEquipment().getChestplateDropChance()) {
@@ -449,9 +449,6 @@ public class EntityListener implements Listener {
 
                         event.getEntity().remove();
 
-                        MyPet myPet = MyPetList.setMyPetActive(inactiveMyPet);
-                        myPet.createPet();
-
                         if (Configuration.CONSUME_LEASH_ITEM && damager.getGameMode() != GameMode.CREATIVE && damager.getItemInHand() != null) {
                             if (damager.getItemInHand().getAmount() > 1) {
                                 damager.getItemInHand().setAmount(damager.getItemInHand().getAmount() - 1);
@@ -460,6 +457,7 @@ public class EntityListener implements Listener {
                             }
                         }
 
+<<<<<<< .merge_file_a03536
                         getPluginManager().callEvent(new MyPetLeashEvent(myPet));
                         DebugLogger.info("New Pet leashed:");
                         DebugLogger.info("   " + myPet.toString());
@@ -467,10 +465,24 @@ public class EntityListener implements Listener {
                             DebugLogger.info(MyPetPlugin.getPlugin().savePets(false) + " pet(s) saved.");
                         }
                         damager.sendMessage(Locales.getString("Message.Leash.Add", myPet.getOwner().getLanguage()));
+=======
+                        MyPet myPet = MyPetList.setMyPetActive(inactiveMyPet);
+                        if (myPet != null) {
+                            myPet.createPet();
 
-                        if (myPet.getOwner().isCaptureHelperActive()) {
-                            myPet.getOwner().setCaptureHelperActive(false);
-                            myPet.sendMessageToOwner(Util.formatText(Locales.getString("Message.Command.CaptureHelper.Mode", myPet.getOwner()), Locales.getString("Name.Disabled", myPet.getOwner())));
+                            getPluginManager().callEvent(new MyPetLeashEvent(myPet));
+                            DebugLogger.info("New Pet leashed:");
+                            DebugLogger.info("   " + myPet.toString());
+                            if (Configuration.STORE_PETS_ON_PET_LEASH) {
+                                MyPetPlugin.getPlugin().saveData(false);
+                            }
+                            damager.sendMessage(Locales.getString("Message.Leash.Add", myPet.getOwner().getLanguage()));
+>>>>>>> .merge_file_a00804
+
+                            if (myPet.getOwner().isCaptureHelperActive()) {
+                                myPet.getOwner().setCaptureHelperActive(false);
+                                myPet.sendMessageToOwner(Util.formatText(Locales.getString("Message.Command.CaptureHelper.Mode", myPet.getOwner()), Locales.getString("Name.Disabled", myPet.getOwner())));
+                            }
                         }
                     }
                 }
@@ -680,7 +692,7 @@ public class EntityListener implements Listener {
                 MyPetList.removeInactiveMyPet(MyPetList.setMyPetInactive(myPet.getOwner()));
                 DebugLogger.info(myPet.getOwner().getName() + " released pet (dead).");
                 if (Configuration.STORE_PETS_ON_PET_RELEASE) {
-                    DebugLogger.info(MyPetPlugin.getPlugin().savePets(false) + " pet(s) saved.");
+                    MyPetPlugin.getPlugin().saveData(false);
                 }
                 return;
             }

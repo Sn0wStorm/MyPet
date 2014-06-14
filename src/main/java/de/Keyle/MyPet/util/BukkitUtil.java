@@ -20,21 +20,25 @@
 
 package de.Keyle.MyPet.util;
 
-import net.minecraft.server.v1_7_R2.*;
+import de.Keyle.MyPet.entity.types.EntityMyPet;
+import de.Keyle.MyPet.util.logger.DebugLogger;
+import net.minecraft.server.v1_7_R3.*;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
-import org.bukkit.craftbukkit.v1_7_R2.CraftWorld;
-import org.bukkit.craftbukkit.v1_7_R2.entity.CraftPlayer;
-import org.bukkit.craftbukkit.v1_7_R2.util.UnsafeList;
+import org.bukkit.craftbukkit.v1_7_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_7_R3.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_7_R3.util.UnsafeList;
 import org.bukkit.entity.Player;
 import org.spigotmc.SpigotConfig;
 
 import java.lang.reflect.Field;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 public class BukkitUtil {
     /**
@@ -91,7 +95,7 @@ public class BukkitUtil {
     }
 
     public static Boolean canSpawn(Location loc, float width, float height, float length) {
-        net.minecraft.server.v1_7_R2.World mcWorld = ((CraftWorld) loc.getWorld()).getHandle();
+        net.minecraft.server.v1_7_R3.World mcWorld = ((CraftWorld) loc.getWorld()).getHandle();
         float halfEntityWidth = width / 2;
         AxisAlignedBB bb = AxisAlignedBB.a(loc.getX() - halfEntityWidth, loc.getY() - height, loc.getZ() - halfEntityWidth, loc.getX() + halfEntityWidth, loc.getY() - height + length, loc.getZ() + halfEntityWidth);
 
@@ -179,4 +183,45 @@ public class BukkitUtil {
         }
         return bungee || Bukkit.getOnlineMode();
     }
+<<<<<<< .merge_file_a07880
+=======
+
+    @SuppressWarnings("unchecked")
+    public static boolean registerMyPetEntity(Class<? extends EntityMyPet> myPetEntityClass, String entityTypeName, int entityTypeId) {
+        try {
+            Field EntityTypes_d = EntityTypes.class.getDeclaredField("d");
+            Field EntityTypes_f = EntityTypes.class.getDeclaredField("f");
+            EntityTypes_d.setAccessible(true);
+            EntityTypes_f.setAccessible(true);
+
+            Map<Class, String> d = (Map) EntityTypes_d.get(EntityTypes_d);
+            Map<Class, Integer> f = (Map) EntityTypes_f.get(EntityTypes_f);
+
+            Iterator cIterator = d.keySet().iterator();
+            while (cIterator.hasNext()) {
+                Class clazz = (Class) cIterator.next();
+                if (clazz.getCanonicalName().equals(myPetEntityClass.getCanonicalName())) {
+                    cIterator.remove();
+                }
+            }
+
+            Iterator eIterator = f.keySet().iterator();
+            while (eIterator.hasNext()) {
+                Class clazz = (Class) eIterator.next();
+                if (clazz.getCanonicalName().equals(myPetEntityClass.getCanonicalName())) {
+                    eIterator.remove();
+                }
+            }
+
+            d.put(myPetEntityClass, entityTypeName);
+            f.put(myPetEntityClass, entityTypeId);
+
+            return true;
+        } catch (Exception e) {
+            DebugLogger.severe("error while registering " + myPetEntityClass.getCanonicalName());
+            DebugLogger.severe(e.getMessage());
+            return false;
+        }
+    }
+>>>>>>> .merge_file_a06944
 }

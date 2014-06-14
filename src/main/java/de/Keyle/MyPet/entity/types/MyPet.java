@@ -44,7 +44,7 @@ import de.Keyle.MyPet.util.support.arenas.*;
 import de.keyle.knbt.*;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_7_R2.CraftWorld;
+import org.bukkit.craftbukkit.v1_7_R3.CraftWorld;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 
@@ -97,12 +97,15 @@ public abstract class MyPet implements IMyPet, NBTStorage {
         Dead, Despawned, Here
     }
 
-    protected MyPet(MyPetPlayer Owner) {
-        this.petOwner = Owner;
+    protected MyPet(MyPetPlayer petOwner) {
+        if (petOwner == null) {
+            throw new IllegalArgumentException("Owner must not be null.");
+        }
+        this.petOwner = petOwner;
         skills = new Skills(this);
         experience = new Experience(this);
         hungerTime = Configuration.HUNGER_SYSTEM_TIME;
-        petName = Locales.getString("Name." + getPetType().getTypeName(), petOwner);
+        petName = Locales.getString("Name." + getPetType().getTypeName(), this.petOwner);
     }
 
     public CraftMyPet getCraftPet() {
@@ -328,7 +331,7 @@ public abstract class MyPet implements IMyPet, NBTStorage {
             }
             if (respawnTime <= 0) {
                 Location loc = petOwner.getPlayer().getLocation();
-                net.minecraft.server.v1_7_R2.World mcWorld = ((CraftWorld) loc.getWorld()).getHandle();
+                net.minecraft.server.v1_7_R3.World mcWorld = ((CraftWorld) loc.getWorld()).getHandle();
                 EntityMyPet petEntity = getPetType().getNewEntityInstance(mcWorld, this);
                 craftMyPet = (CraftMyPet) petEntity.getBukkitEntity();
                 if (getYSpawnOffset() > 0) {

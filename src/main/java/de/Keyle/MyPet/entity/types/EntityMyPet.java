@@ -39,10 +39,10 @@ import de.Keyle.MyPet.util.logger.DebugLogger;
 import de.Keyle.MyPet.util.player.MyPetPlayer;
 import de.Keyle.MyPet.util.support.Permissions;
 import de.Keyle.MyPet.util.support.PvPChecker;
-import net.minecraft.server.v1_7_R2.*;
+import net.minecraft.server.v1_7_R3.*;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_7_R2.entity.CraftEntity;
-import org.bukkit.craftbukkit.v1_7_R2.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_7_R3.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_7_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityRegainHealthEvent.RegainReason;
 
@@ -232,21 +232,6 @@ public abstract class EntityMyPet extends EntityCreature implements IMonster {
 
     public MyPetPlayer getOwner() {
         return myPet.getOwner();
-    }
-
-    public boolean damageEntity(DamageSource damagesource, int i) {
-        boolean damageEntity = false;
-        try {
-            Entity entity = damagesource.getEntity();
-
-            if (entity != null && !(entity instanceof EntityHuman) && !(entity instanceof EntityArrow)) {
-                i = (i + 1) / 2;
-            }
-            damageEntity = super.damageEntity(damagesource, i);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return damageEntity;
     }
 
     /**

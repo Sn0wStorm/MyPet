@@ -18,27 +18,35 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.Keyle.MyPet.skill.skills.info;
+package de.Keyle.MyPet.util;
 
-import de.Keyle.MyPet.gui.skilltreecreator.skills.SkillPropertiesPanel;
+import de.keyle.knbt.TagBase;
 import de.keyle.knbt.TagCompound;
 
-public interface ISkillInfo {
-    public SkillPropertiesPanel getGuiPanel();
+import java.util.Map;
 
-    public void setProperties(TagCompound propertiesCompound);
+public class PluginStorage {
+    private final Map<String, TagBase> data;
 
-    public TagCompound getProperties();
+    public PluginStorage(TagCompound rootTag) {
+        this.data = rootTag.getCompoundData();
+    }
 
-    public void setDefaultProperties();
+    public TagCompound getStorage(Class clazz) {
+        return (TagCompound) data.get(clazz.getName());
+    }
 
-    public boolean isAddedByInheritance();
+    public TagCompound createAndGetStorage(Class clazz) {
+        if (data.containsKey(clazz.getName())) {
+            return (TagCompound) data.get(clazz.getName());
+        } else {
+            TagCompound newTag = new TagCompound();
+            data.put(clazz.getName(), newTag);
+            return newTag;
+        }
+    }
 
-    public void setIsInherited(boolean flag);
-
-    public ISkillInfo cloneSkill();
-
-    public String getName();
-
-    public String getName(String locale);
+    public TagCompound save() {
+        return new TagCompound(data);
+    }
 }
