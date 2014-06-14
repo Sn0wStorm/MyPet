@@ -457,15 +457,6 @@ public class EntityListener implements Listener {
                             }
                         }
 
-<<<<<<< .merge_file_a03536
-                        getPluginManager().callEvent(new MyPetLeashEvent(myPet));
-                        DebugLogger.info("New Pet leashed:");
-                        DebugLogger.info("   " + myPet.toString());
-                        if (Configuration.STORE_PETS_ON_PET_LEASH) {
-                            DebugLogger.info(MyPetPlugin.getPlugin().savePets(false) + " pet(s) saved.");
-                        }
-                        damager.sendMessage(Locales.getString("Message.Leash.Add", myPet.getOwner().getLanguage()));
-=======
                         MyPet myPet = MyPetList.setMyPetActive(inactiveMyPet);
                         if (myPet != null) {
                             myPet.createPet();
@@ -477,7 +468,6 @@ public class EntityListener implements Listener {
                                 MyPetPlugin.getPlugin().saveData(false);
                             }
                             damager.sendMessage(Locales.getString("Message.Leash.Add", myPet.getOwner().getLanguage()));
->>>>>>> .merge_file_a00804
 
                             if (myPet.getOwner().isCaptureHelperActive()) {
                                 myPet.getOwner().setCaptureHelperActive(false);

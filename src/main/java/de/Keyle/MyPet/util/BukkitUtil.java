@@ -22,16 +22,16 @@ package de.Keyle.MyPet.util;
 
 import de.Keyle.MyPet.entity.types.EntityMyPet;
 import de.Keyle.MyPet.util.logger.DebugLogger;
-import net.minecraft.server.v1_7_R3.*;
+import net.minecraft.server.v1_7_R2.*;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
-import org.bukkit.craftbukkit.v1_7_R3.CraftWorld;
-import org.bukkit.craftbukkit.v1_7_R3.entity.CraftPlayer;
-import org.bukkit.craftbukkit.v1_7_R3.util.UnsafeList;
+import org.bukkit.craftbukkit.v1_7_R2.CraftWorld;
+import org.bukkit.craftbukkit.v1_7_R2.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_7_R2.util.UnsafeList;
 import org.bukkit.entity.Player;
 import org.spigotmc.SpigotConfig;
 
@@ -95,7 +95,7 @@ public class BukkitUtil {
     }
 
     public static Boolean canSpawn(Location loc, float width, float height, float length) {
-        net.minecraft.server.v1_7_R3.World mcWorld = ((CraftWorld) loc.getWorld()).getHandle();
+        net.minecraft.server.v1_7_R2.World mcWorld = ((CraftWorld) loc.getWorld()).getHandle();
         float halfEntityWidth = width / 2;
         AxisAlignedBB bb = AxisAlignedBB.a(loc.getX() - halfEntityWidth, loc.getY() - height, loc.getZ() - halfEntityWidth, loc.getX() + halfEntityWidth, loc.getY() - height + length, loc.getZ() + halfEntityWidth);
 
@@ -183,8 +183,6 @@ public class BukkitUtil {
         }
         return bungee || Bukkit.getOnlineMode();
     }
-<<<<<<< .merge_file_a07880
-=======
 
     @SuppressWarnings("unchecked")
     public static boolean registerMyPetEntity(Class<? extends EntityMyPet> myPetEntityClass, String entityTypeName, int entityTypeId) {
@@ -223,5 +221,4 @@ public class BukkitUtil {
             return false;
         }
     }
->>>>>>> .merge_file_a06944
 }

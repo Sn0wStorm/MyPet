@@ -549,11 +549,6 @@ public class MyPetPlugin extends JavaPlugin implements IScheduler {
 
     private int loadPlayers(TagList playerList) {
         int playerCount = 0;
-<<<<<<< .merge_file_a03596
-        TagList playerList = nbtConfiguration.getNBTCompound().getAs("Players", TagList.class);
-
-=======
->>>>>>> .merge_file_a03276
         if (BukkitUtil.isInOnlineMode()) {
             List<String> unknownPlayers = new ArrayList<String>();
             for (int i = 0; i < playerList.getReadOnlyList().size(); i++) {
