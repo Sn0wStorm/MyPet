@@ -63,7 +63,6 @@ public abstract class MyPetPlayer implements IScheduler, NBTStorage {
 
     protected boolean captureHelperMode = false;
     protected boolean autoRespawn = false;
-    protected boolean showHealthBar = false;
     protected int autoRespawnMin = 1;
 
     protected BiMap<String, UUID> petWorldUUID = HashBiMap.create();
@@ -95,8 +94,6 @@ public abstract class MyPetPlayer implements IScheduler, NBTStorage {
             return true;
         } else if (petWorldUUID.size() > 0) {
             return true;
-        } else if (showHealthBar) {
-            return true;
         }
         return false;
     }
@@ -117,14 +114,6 @@ public abstract class MyPetPlayer implements IScheduler, NBTStorage {
 
     public int getAutoRespawnMin() {
         return autoRespawnMin;
-    }
-
-    public boolean isHealthBarActive() {
-        return showHealthBar;
-    }
-
-    public void setHealthBarActive(boolean showHealthBar) {
-        this.showHealthBar = showHealthBar;
     }
 
     public boolean isCaptureHelperActive() {
@@ -457,7 +446,6 @@ public abstract class MyPetPlayer implements IScheduler, NBTStorage {
         playerNBT.getCompoundData().put("AutoRespawnMin", new TagInt(getAutoRespawnMin()));
         playerNBT.getCompoundData().put("ExtendedInfo", getExtendedInfo());
         playerNBT.getCompoundData().put("CaptureMode", new TagByte(isCaptureHelperActive()));
-        playerNBT.getCompoundData().put("HealthBar", new TagByte(isHealthBarActive()));
 
         TagCompound playerUUIDTag = new TagCompound();
         if (mojangUUID != null) {
@@ -511,9 +499,6 @@ public abstract class MyPetPlayer implements IScheduler, NBTStorage {
         } else if (myplayerNBT.containsKeyAs("CaptureMode", TagByte.class)) {
             setCaptureHelperActive(myplayerNBT.getAs("CaptureMode", TagByte.class).getBooleanData());
         }
-        if (myplayerNBT.getCompoundData().containsKey("HealthBar")) {
-            setHealthBarActive(myplayerNBT.getAs("HealthBar", TagByte.class).getBooleanData());
-        }
         if (myplayerNBT.getCompoundData().containsKey("LastActiveMyPetUUID")) {
             String lastActive = myplayerNBT.getAs("LastActiveMyPetUUID", TagString.class).getStringData();
             if (!lastActive.equalsIgnoreCase("")) {
@@ -544,19 +529,6 @@ public abstract class MyPetPlayer implements IScheduler, NBTStorage {
             if (myPet.getStatus() == PetState.Here) {
                 if (myPet.getLocation().getWorld() != this.getPlayer().getLocation().getWorld() || myPet.getLocation().distance(this.getPlayer().getLocation()) > 40) {
                     myPet.removePet(true);
-                }
-
-                if (showHealthBar) {
-                    String msg = myPet.getPetName() + ChatColor.RESET + ": ";
-                    if (myPet.getHealth() > myPet.getMaxHealth() / 3 * 2) {
-                        msg += org.bukkit.ChatColor.GREEN;
-                    } else if (myPet.getHealth() > myPet.getMaxHealth() / 3) {
-                        msg += org.bukkit.ChatColor.YELLOW;
-                    } else {
-                        msg += org.bukkit.ChatColor.RED;
-                    }
-                    msg += String.format("%1.2f", myPet.getHealth()) + org.bukkit.ChatColor.WHITE + "/" + String.format("%1.2f", myPet.getMaxHealth());
-                    BukkitUtil.sendMessageActionBar(getPlayer(), msg);
                 }
             }
         }
